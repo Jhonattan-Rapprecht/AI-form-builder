@@ -6,7 +6,7 @@ const router = express.Router();
 // Main page route / under construction
 
 router.get('/', (req, res) => {
-    res.send('Main page under construction');
+    res.render('construction');
 });
 
 
