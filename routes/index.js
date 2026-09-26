@@ -1,5 +1,7 @@
 ﻿const express = require("express");
 const router = express.Router();
+const authRouter = require('./auth');
+const adminRouter = require('./admin');
 
 /* ---------- Public Pages ---------- */
 
@@ -7,6 +9,9 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.render("construction");
 });
+
+router.use('/', authRouter);
+router.use('/admin', adminRouter);
 
 /* ---------- API Routes ---------- */
 

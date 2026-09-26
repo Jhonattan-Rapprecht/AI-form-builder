@@ -11,7 +11,8 @@ const expectedTables = [
   'organization_memberships',
   'platform_roles',
   'user_platform_roles',
-  'auth_identities'
+  'auth_identities',
+  'sessions'
 ];
 
 const expectedConstraints = {
@@ -25,7 +26,9 @@ const expectedConstraints = {
   fk_user_platform_roles_user: 'FOREIGN KEY',
   fk_user_platform_roles_platform_role: 'FOREIGN KEY',
   uq_auth_identities_provider_subject: 'UNIQUE',
-  fk_auth_identities_user: 'FOREIGN KEY'
+  fk_auth_identities_user: 'FOREIGN KEY',
+  uq_sessions_token_hash: 'UNIQUE',
+  fk_sessions_user: 'FOREIGN KEY'
 };
 
 const createTables = [
@@ -106,6 +109,22 @@ const createTables = [
     KEY ix_auth_identities_user (user_id),
     KEY ix_auth_identities_provider_email (provider, provider_email),
     CONSTRAINT fk_auth_identities_user
+      FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS sessions (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id BIGINT UNSIGNED NOT NULL,
+    token_hash CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    last_activity_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_agent VARCHAR(512) NULL,
+    ip_address VARCHAR(45) NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_sessions_token_hash (token_hash),
+    KEY ix_sessions_user (user_id),
+    KEY ix_sessions_expires_at (expires_at),
+    CONSTRAINT fk_sessions_user
       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
 ];
