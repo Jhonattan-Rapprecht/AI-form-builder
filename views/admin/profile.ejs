@@ -1,0 +1,53 @@
+<%- include('partials/start', { title, activeNavigation, currentUser }) %>
+
+<% if (notice) { %><p class="form-notice" role="status"><%= notice %></p><% } %>
+<% if (error) { %><p class="form-error" role="alert"><%= error %></p><% } %>
+
+<div class="profile-grid">
+    <section class="content-panel" aria-labelledby="account-title">
+        <div class="panel-heading">
+            <div>
+                <p class="section-kicker">PERSONAL ACCOUNT</p>
+                <h2 id="account-title">Account details</h2>
+            </div>
+            <span class="status-pill"><span class="status-dot"></span><%= profile.status %></span>
+        </div>
+
+        <dl class="detail-list">
+            <div><dt>First name</dt><dd><%= profile.first_name || 'Not provided' %></dd></div>
+            <div><dt>Last name</dt><dd><%= profile.last_name || 'Not provided' %></dd></div>
+            <div><dt>Email</dt><dd><%= profile.email %></dd></div>
+            <div><dt>Platform role</dt><dd><span class="role-label"><%= profile.platform_role %></span></dd></div>
+            <div><dt>Account created</dt><dd><%= profile.createdAtLabel %></dd></div>
+            <div><dt>Last login</dt><dd><%= profile.lastLoginLabel %></dd></div>
+        </dl>
+    </section>
+
+    <section class="content-panel" aria-labelledby="edit-profile-title">
+        <div class="panel-heading">
+            <div>
+                <p class="section-kicker">PROFILE</p>
+                <h2 id="edit-profile-title">Basic information</h2>
+            </div>
+        </div>
+        <form class="profile-form" action="/admin/profile" method="post">
+            <label for="first-name">First name</label>
+            <input id="first-name" name="first_name" type="text" maxlength="100" autocomplete="given-name" value="<%= profile.first_name || '' %>">
+            <label for="last-name">Last name</label>
+            <input id="last-name" name="last_name" type="text" maxlength="100" autocomplete="family-name" value="<%= profile.last_name || '' %>">
+            <p class="form-hint">Email address and platform access are managed separately.</p>
+            <button class="primary-button" type="submit">Save profile</button>
+        </form>
+    </section>
+</div>
+
+<section class="content-panel security-placeholder" aria-labelledby="security-title">
+    <div>
+        <p class="section-kicker">SECURITY</p>
+        <h2 id="security-title">Password and security</h2>
+        <p>Password and security management will be implemented here.</p>
+    </div>
+    <span class="area-status">Coming later</span>
+</section>
+
+<%- include('partials/end') %>

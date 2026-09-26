@@ -60,6 +60,7 @@ function formBody(email, password) {
 async function run() {
   const temporaryEmail = `auth-test-${crypto.randomUUID()}@example.invalid`;
   const disabledEmail = `auth-disabled-${crypto.randomUUID()}@example.invalid`;
+  const profileAdminEmail = `auth-profile-${crypto.randomUUID()}@example.invalid`;
   const temporaryPassword = `${crypto.randomBytes(20).toString('base64url')}Aa1!`;
   const temporaryHash = await bcrypt.hash(temporaryPassword, 12);
   const temporaryUserIds = [];
@@ -80,7 +81,11 @@ async function run() {
     }
     const superAdmin = admins[0];
 
-    for (const [email, status] of [[temporaryEmail, 'ACTIVE'], [disabledEmail, 'DISABLED']]) {
+    for (const [email, status] of [
+      [temporaryEmail, 'ACTIVE'],
+      [disabledEmail, 'DISABLED'],
+      [profileAdminEmail, 'ACTIVE']
+    ]) {
       const [result] = await pool.execute(
         'INSERT INTO users (email, password_hash, status) VALUES (?, ?, ?)',
         [email, temporaryHash, status]
@@ -92,6 +97,17 @@ async function run() {
         [result.insertId, email, email]
       );
     }
+    const profileAdminId = temporaryUserIds[2];
+    const [platformRoles] = await pool.execute(
+      "SELECT id FROM platform_roles WHERE role_code = 'SUPER_ADMIN' LIMIT 1"
+    );
+    if (platformRoles.length !== 1) {
+      throw new Error('SUPER_ADMIN platform role is unavailable for the integration test.');
+    }
+    await pool.execute(
+      'INSERT INTO user_platform_roles (user_id, platform_role_id) VALUES (?, ?)',
+      [profileAdminId, platformRoles[0].id]
+    );
 
     await new Promise(resolve => {
       server = app.listen(0, '127.0.0.1', resolve);
@@ -152,7 +168,59 @@ async function run() {
       headers: { cookie: authenticatedCookie }
     });
     check('Authenticated Super Admin can access /admin',
-      authenticatedAdmin.status === 200 && (await authenticatedAdmin.text()).includes('Super Admin authentication successful.'));
+      authenticatedAdmin.status === 200 && (await authenticatedAdmin.text()).includes('Administration areas'));
+
+    const adminPages = [
+      ['/admin/profile', 'My Profile'],
+      ['/admin/settings', 'System Settings'],
+      ['/admin/organizations', 'Organizations'],
+      ['/admin/users', 'Users'],
+      ['/admin/onboarding', 'Onboarding'],
+      ['/admin/security', 'Security']
+    ];
+    for (const [route, pageTitle] of adminPages) {
+      const response = await fetch(`${baseUrl}${route}`, { headers: { cookie: authenticatedCookie } });
+      const html = await response.text();
+      check(`Super Admin can access ${route}`, response.status === 200 && html.includes(pageTitle));
+      if (route === '/admin/profile') {
+        check('Profile displays safe identity and account metadata only',
+          html.includes(superAdmin.email) && html.includes('SUPER_ADMIN') &&
+          html.includes('Account created') && html.includes('Last login') &&
+          !html.includes('password_hash') && !html.includes(hashRows[0].password_hash) &&
+          !html.includes(authenticatedToken));
+      }
+      if (route === '/admin/settings') {
+        check('Settings show placeholders without save controls',
+          html.includes('Not configured') && html.includes('OpenID Connect') &&
+          !html.includes('action="/admin/settings"') && !html.includes('Save settings'));
+      }
+    }
+
+    const profileAdminToken = await sessionService.createSession(profileAdminId, {
+      get: () => null,
+      ip: '127.0.0.1'
+    });
+    const profileAdminCookie = `${cookieName}=${profileAdminToken}`;
+    const updateProfile = await fetch(`${baseUrl}/admin/profile`, {
+      method: 'POST',
+      redirect: 'manual',
+      headers: {
+        ...origin,
+        cookie: profileAdminCookie,
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({ first_name: 'Profile', last_name: 'Test' })
+    });
+    const [updatedProfileNames] = await pool.execute(
+      'SELECT first_name, last_name FROM users WHERE id = ?',
+      [profileAdminId]
+    );
+    check('Profile form updates only first and last name',
+      updateProfile.status === 302 && updateProfile.headers.get('location') === '/admin/profile?updated=1' &&
+      updatedProfileNames[0].first_name === 'Profile' && updatedProfileNames[0].last_name === 'Test');
+    const profileAfterUpdate = await fetch(`${baseUrl}/admin/profile`, { headers: { cookie: profileAdminCookie } });
+    check('Profile update is reflected in the profile page',
+      profileAfterUpdate.status === 200 && (await profileAfterUpdate.text()).includes('value="Profile"'));
 
     const invalidOriginLogout = await fetch(`${baseUrl}/logout`, {
       method: 'POST',

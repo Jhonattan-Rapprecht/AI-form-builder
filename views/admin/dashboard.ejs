@@ -1,0 +1,48 @@
+<%- include('partials/start', { title, activeNavigation, currentUser }) %>
+
+<section class="welcome-band" aria-labelledby="welcome-title">
+    <div>
+        <p class="section-kicker">PLATFORM OVERVIEW</p>
+        <h2 id="welcome-title">Welcome back<% if (currentUser.firstName) { %>, <%= currentUser.firstName %><% } %>.</h2>
+        <p>Your platform administration workspace is ready.</p>
+    </div>
+    <span class="status-pill"><span class="status-dot"></span> Platform access active</span>
+</section>
+
+<section class="section-block" aria-labelledby="workspace-title">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">WORKSPACE</p>
+            <h2 id="workspace-title">Administration areas</h2>
+        </div>
+    </div>
+    <div class="area-grid">
+        <a class="area-item" href="/admin/organizations">
+            <span class="area-index">01</span>
+            <span class="area-copy"><strong>Organizations</strong><small>Customer workspaces</small></span>
+            <span class="area-status">Coming soon</span>
+        </a>
+        <a class="area-item" href="/admin/users">
+            <span class="area-index">02</span>
+            <span class="area-copy"><strong>Users</strong><small>Platform accounts</small></span>
+            <span class="area-status">Coming soon</span>
+        </a>
+        <a class="area-item" href="/admin/onboarding">
+            <span class="area-index">03</span>
+            <span class="area-copy"><strong>Onboarding</strong><small>Customer implementation</small></span>
+            <span class="area-status">Coming soon</span>
+        </a>
+        <a class="area-item" href="/admin/settings">
+            <span class="area-index">04</span>
+            <span class="area-copy"><strong>System Settings</strong><small>Platform configuration</small></span>
+            <span class="area-status">Structure ready</span>
+        </a>
+    </div>
+</section>
+
+<section class="note-band">
+    <span class="note-mark" aria-hidden="true">i</span>
+    <p>This is the initial administration shell. Platform workflows will be introduced in later milestones.</p>
+</section>
+
+<%- include('partials/end') %>

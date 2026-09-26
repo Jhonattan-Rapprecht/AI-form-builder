@@ -1,0 +1,38 @@
+<%- include('partials/start', { title, activeNavigation, currentUser }) %>
+
+<p class="page-intro">Platform configuration areas are reserved here. Settings are not editable in this milestone.</p>
+
+<div class="settings-grid">
+    <section class="content-panel" aria-labelledby="general-settings-title">
+        <div class="panel-heading"><div><p class="section-kicker">GENERAL</p><h2 id="general-settings-title">Application</h2></div></div>
+        <dl class="setting-list">
+            <div><dt>Application name</dt><dd>AI-Formbuilder</dd><span class="area-status">Coming soon</span></div>
+            <div><dt>Application URL</dt><dd>Not configured</dd><span class="area-status">Not configured</span></div>
+        </dl>
+    </section>
+
+    <section class="content-panel" aria-labelledby="security-settings-title">
+        <div class="panel-heading"><div><p class="section-kicker">SECURITY</p><h2 id="security-settings-title">Authentication</h2></div></div>
+        <dl class="setting-list">
+            <div><dt>Session configuration</dt><dd>8-hour server-side sessions</dd><span class="area-status">Current</span></div>
+            <div><dt>Authentication</dt><dd>Local email and password</dd><span class="area-status">Current</span></div>
+        </dl>
+    </section>
+
+    <section class="content-panel" aria-labelledby="email-settings-title">
+        <div class="panel-heading"><div><p class="section-kicker">EMAIL</p><h2 id="email-settings-title">Email delivery</h2></div></div>
+        <dl class="setting-list"><div><dt>Email configuration</dt><dd>Not configured</dd><span class="area-status">Not configured</span></div></dl>
+    </section>
+
+    <section class="content-panel" aria-labelledby="sso-settings-title">
+        <div class="panel-heading"><div><p class="section-kicker">SINGLE SIGN-ON</p><h2 id="sso-settings-title">Identity providers</h2></div></div>
+        <dl class="setting-list">
+            <div><dt>Google</dt><dd>Not configured</dd><span class="area-status">Coming soon</span></div>
+            <div><dt>Microsoft</dt><dd>Not configured</dd><span class="area-status">Coming soon</span></div>
+            <div><dt>OpenID Connect</dt><dd>Not configured</dd><span class="area-status">Coming soon</span></div>
+            <div><dt>SAML 2.0</dt><dd>Not configured</dd><span class="area-status">Coming soon</span></div>
+        </dl>
+    </section>
+</div>
+
+<%- include('partials/end') %>

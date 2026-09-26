@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | AI-Formbuilder</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/admin" aria-label="AI-Formbuilder platform dashboard">
+                <span class="brand-mark">AF</span>
+                <span class="brand-name">AI-Formbuilder</span>
+            </a>
+
+            <div class="workspace-label">PLATFORM</div>
+            <nav class="primary-navigation" aria-label="Platform administration">
+                <% const navigationItems = [
+                    ['dashboard', 'Dashboard', '/admin'],
+                    ['organizations', 'Organizations', '/admin/organizations'],
+                    ['users', 'Users', '/admin/users'],
+                    ['onboarding', 'Onboarding', '/admin/onboarding'],
+                    ['settings', 'System Settings', '/admin/settings'],
+                    ['security', 'Security', '/admin/security'],
+                    ['profile', 'My Profile', '/admin/profile']
+                ]; %>
+                <% navigationItems.forEach(([key, label, href]) => { %>
+                    <a class="nav-link <%= activeNavigation === key ? 'is-active' : '' %>"
+                       href="<%= href %>" <%= activeNavigation === key ? 'aria-current="page"' : '' %>>
+                        <span class="nav-marker" aria-hidden="true"></span>
+                        <span><%= label %></span>
+                    </a>
+                <% }); %>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <span class="platform-indicator"></span>
+                Platform administration
+            </div>
+        </aside>
+
+        <div class="admin-main">
+            <header class="topbar">
+                <div class="topbar-context">
+                    <span class="context-label">Platform</span>
+                    <span class="context-divider">/</span>
+                    <span><%= title %></span>
+                </div>
+                <div class="topbar-account">
+                    <div class="account-copy">
+                        <span class="account-name"><%= [currentUser.firstName, currentUser.lastName].filter(Boolean).join(' ') || currentUser.email %></span>
+                        <span class="account-role">Super Administrator</span>
+                    </div>
+                    <form action="/logout" method="post">
+                        <button class="logout-button" type="submit">Sign out</button>
+                    </form>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-heading">
+                    <p class="page-eyebrow">PLATFORM ADMINISTRATION</p>
+                    <h1><%= title %></h1>
+                </div>
