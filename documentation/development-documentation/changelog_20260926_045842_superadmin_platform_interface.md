@@ -1,6 +1,6 @@
 # Change Log: Super Admin Platform Interface
 
-Date: 2026-09-26 04:46:57 local time
+Date: 2026-09-26 04:58:42 (+02:00)
 
 ## Scope
 
@@ -25,7 +25,12 @@ Replaced the temporary authentication test page with the initial server-rendered
 
 ## Verification
 
-Run `npm run db:init` to confirm the existing schema, then run `npm run test:auth` in an interactive terminal. The test uses the existing Super Admin password with hidden input and temporary test accounts for profile/authorization cases; it removes its temporary accounts afterward. Do not put credentials in source code or logs.
+- `npm run db:init` completed successfully; no schema changes were needed for the admin interface.
+- `npm run test:auth` passed all 23 checks, covering login, all protected admin pages, profile data/editing, sensitive-field exclusion, logout invalidation, disabled-account denial, role checks, and throttling.
+- EJS rendering, editor diagnostics, and `git diff --check` passed.
+- Integration fixtures were removed; the existing Super Admin account was not modified.
+
+To try the interface, run `npm run dev`, open `/login`, and sign in using the email and password supplied during the initial Super Admin bootstrap. Successful Super Admin authentication redirects to `/admin`. Passwords are never written to source or documentation.
 
 ## Deferred
 

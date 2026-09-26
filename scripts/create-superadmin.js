@@ -65,7 +65,18 @@ function promptHidden(label) {
 
 function validateEmail(email) {
   const normalizedEmail = email.trim().toLowerCase();
-  if (normalizedEmail.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+  const [localPart, domainPart] = normalizedEmail.split('@');
+  const domainLabels = domainPart ? domainPart.split('.') : [];
+  const validDomain = domainLabels.length >= 2 && domainLabels.every(label =>
+    /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)
+  );
+
+  if (
+    normalizedEmail.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) ||
+    !localPart || localPart.length > 64 ||
+    !validDomain
+  ) {
     throw new Error('Enter a valid email address.');
   }
   return normalizedEmail;
