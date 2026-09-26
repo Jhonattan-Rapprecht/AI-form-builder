@@ -2,6 +2,18 @@
 
 Date: 2026-09-26 03:42:04 (+02:00)
 
+## Purpose
+
+The initial Super Administrator is created through a local operator-run bootstrap command so platform access cannot be claimed through public registration. There is no public Super Administrator registration page.
+
+## Run the Bootstrap
+
+From the project root, run `npm run create-superadmin`. Enter the account email when prompted, then enter and confirm a password of at least 12 characters at the hidden terminal prompts. The password is hashed with bcrypt before it is stored and is never printed.
+
+The command creates an active user, a `local` authentication identity, and a `SUPER_ADMIN` platform-role assignment in one database transaction. It does not create an organization membership.
+
+Running the command again does not create a duplicate Super Administrator or change an existing password. Once the authenticated Super Administrator dashboard exists, additional Super Administrators should be managed there instead of through the bootstrap command.
+
 ## Changes
 
 - Added the `npm run create-superadmin` command and its local-only script.
