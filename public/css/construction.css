@@ -1,101 +1,388 @@
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
 }
 
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	background: #0f172a;
-	color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b1224;
+    color: #ffffff;
 }
 
 .construction-page {
-	min-height: 100vh;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
 
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-	padding: 30px;
+    padding: 30px 50px;
+}
+
+
+/* ------------------------------
+   Background
+------------------------------ */
+
+.construction-page::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+
+    background-size: 50px 50px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent
+    );
+
+    pointer-events: none;
+}
+
+
+/* ------------------------------
+   Top bar
+------------------------------ */
+
+.top-bar {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    color: #cbd5e1;
+}
+
+.brand-ai {
+    color: #3b82f6;
 }
 
 .version {
-	font-size: 14px;
-	font-weight: 600;
-	color: #94a3b8;
+    font-size: 13px;
+    color: #64748b;
+
+    padding: 6px 12px;
+
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 20px;
 }
+
+
+/* ------------------------------
+   Main content
+------------------------------ */
 
 .construction-content {
-	flex: 1;
+    position: relative;
+    z-index: 2;
 
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    flex: 1;
 
-	text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-	margin-top: -40px;
+    text-align: center;
+
+    padding-bottom: 30px;
 }
 
+
+/* ------------------------------
+   Wrench
+------------------------------ */
+
 .wrench-container {
-	width: 180px;
-	height: 180px;
+    position: relative;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    width: 190px;
+    height: 190px;
 
-	margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 30px;
 }
 
 .wrench {
-	width: 150px;
-	height: 150px;
+    position: relative;
+    z-index: 2;
 
-	object-fit: contain;
+    width: 145px;
+    height: 145px;
 
-	animation: wrench-turn 4s ease-in-out infinite;
+    object-fit: contain;
 
-	filter:
-		drop-shadow(0 0 15px rgba(37, 99, 235, 0.45));
+    animation: wrench-turn 4s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 12px rgba(37, 99, 235, 0.5));
 }
+
+.wrench-glow {
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.18);
+
+    filter: blur(35px);
+
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+
+/* Wrench movement */
 
 @keyframes wrench-turn {
 
-	0% {
-		transform: rotate(0deg);
-	}
+    0% {
+        transform: rotate(0deg);
+    }
 
-	25% {
-		transform: rotate(20deg);
-	}
+    20% {
+        transform: rotate(18deg);
+    }
 
-	50% {
-		transform: rotate(-20deg);
-	}
+    40% {
+        transform: rotate(-18deg);
+    }
 
-	75% {
-		transform: rotate(15deg);
-	}
+    60% {
+        transform: rotate(12deg);
+    }
 
-	100% {
-		transform: rotate(0deg);
-	}
+    80% {
+        transform: rotate(-8deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
+
+
+/* Glow */
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.9;
+    }
+}
+
+
+/* ------------------------------
+   Status
+------------------------------ */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+
+    color: #60a5fa;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #3b82f6;
+
+    box-shadow:
+        0 0 8px rgba(59, 130, 246, 0.9);
+
+    animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* ------------------------------
+   Heading
+------------------------------ */
 
 h1 {
-	font-size: 42px;
-	margin-bottom: 20px;
+    font-size: clamp(38px, 5vw, 64px);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 22px;
 }
 
-p {
-	font-size: 18px;
-	color: #cbd5e1;
+
+/* ------------------------------
+   Description
+------------------------------ */
+
+.description {
+    font-size: 17px;
+
+    line-height: 1.7;
+
+    color: #94a3b8;
+
+    margin-bottom: 35px;
 }
 
-.subtext {
-	margin-top: 8px;
-	font-size: 15px;
-	color: #64748b;
+
+/* ------------------------------
+   Progress
+------------------------------ */
+
+.progress-container {
+    width: min(420px, 80vw);
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    font-size: 11px;
+
+    color: #64748b;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 5px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: rgba(148, 163, 184, 0.12);
+}
+
+.progress {
+    width: 35%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #3b82f6;
+
+    box-shadow:
+        0 0 12px rgba(59, 130, 246, 0.7);
+
+    animation: progress-move 3s ease-in-out infinite;
+}
+
+@keyframes progress-move {
+
+    0% {
+        width: 25%;
+    }
+
+    50% {
+        width: 55%;
+    }
+
+    100% {
+        width: 25%;
+    }
+}
+
+
+/* ------------------------------
+   Footer
+------------------------------ */
+
+footer {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    color: #475569;
+}
+
+
+/* ------------------------------
+   Mobile
+------------------------------ */
+
+@media (max-width: 600px) {
+
+    .construction-page {
+        padding: 25px;
+    }
+
+    .wrench-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .wrench {
+        width: 115px;
+        height: 115px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .description {
+        font-size: 15px;
+    }
+
 }
