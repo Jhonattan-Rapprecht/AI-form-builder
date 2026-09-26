@@ -1,8 +1,8 @@
 :root {
-    color-scheme: light;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #172b32;
-    background: #edf2ef;
+    color-scheme: dark;
+    font-family: var(--afb-font-family);
+    color: var(--afb-white);
+    background: var(--afb-navy);
 }
 
 * {
@@ -13,9 +13,7 @@ body {
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
-    background:
-        linear-gradient(135deg, rgba(23, 109, 100, 0.07), transparent 48%),
-        #edf2ef;
+    background: var(--afb-navy);
 }
 
 .auth-shell {
@@ -25,42 +23,38 @@ body {
     align-items: center;
     justify-content: center;
     padding: 32px 20px 24px;
+    position: relative;
+    isolation: isolate;
+}
+
+.auth-shell::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--afb-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--afb-grid-line) 1px, transparent 1px);
+    background-size: 50px 50px;
+    content: "";
+    mask-image: linear-gradient(to bottom, black, transparent);
 }
 
 .auth-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     margin-bottom: 32px;
-    color: #18363a;
-    font-size: 17px;
-    font-weight: 700;
-}
-
-.brand-mark {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-    border-radius: 7px;
-    background: #176d64;
-    color: #fff;
-    font-size: 12px;
-    letter-spacing: 0;
 }
 
 .auth-panel {
     width: min(100%, 420px);
     padding: 36px;
-    border: 1px solid #dce5e0;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 18px 50px rgba(29, 57, 53, 0.08);
+    border: 1px solid var(--afb-border);
+    border-radius: 7px;
+    background: var(--afb-surface);
+    box-shadow: 0 18px 50px var(--afb-panel-glow);
 }
 
 .eyebrow {
     margin: 0 0 12px;
-    color: #176d64;
+    color: var(--afb-blue-status);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.2px;
@@ -68,14 +62,14 @@ body {
 
 h1 {
     margin: 0;
-    color: #173238;
+    color: var(--afb-white);
     font-size: 30px;
     line-height: 1.2;
 }
 
 .intro {
     margin: 10px 0 26px;
-    color: #5d6d70;
+    color: var(--afb-text-muted);
     font-size: 14px;
     line-height: 1.5;
 }
@@ -87,7 +81,7 @@ form {
 
 label {
     margin-top: 6px;
-    color: #253b3e;
+    color: var(--afb-brand-muted);
     font-size: 13px;
     font-weight: 700;
 }
@@ -96,10 +90,10 @@ input {
     width: 100%;
     min-height: 46px;
     padding: 10px 12px;
-    border: 1px solid #bdccc6;
+    border: 1px solid var(--afb-border);
     border-radius: 5px;
-    background: #fff;
-    color: #172b32;
+    background: var(--afb-navy);
+    color: var(--afb-white);
     font: inherit;
     font-size: 15px;
 }
@@ -107,7 +101,7 @@ input {
 input:focus-visible,
 button:focus-visible,
 a:focus-visible {
-    outline: 3px solid rgba(23, 109, 100, 0.28);
+    outline: 3px solid var(--afb-blue);
     outline-offset: 2px;
 }
 
@@ -116,8 +110,8 @@ button {
     margin-top: 14px;
     border: 0;
     border-radius: 5px;
-    background: #176d64;
-    color: #fff;
+    background: var(--afb-blue);
+    color: var(--afb-white);
     cursor: pointer;
     font: inherit;
     font-size: 14px;
@@ -125,17 +119,17 @@ button {
 }
 
 button:hover {
-    background: #125a53;
+    filter: brightness(1.12);
 }
 
 .button-secondary {
-    border: 1px solid #bdccc6;
-    background: #fff;
-    color: #173238;
+    border: 1px solid var(--afb-border);
+    background: transparent;
+    color: var(--afb-white);
 }
 
 .button-secondary:hover {
-    background: #f3f7f5;
+    background: var(--afb-surface);
 }
 
 .message {
@@ -147,9 +141,9 @@ button:hover {
 }
 
 .message-error {
-    border: 1px solid #efc8bd;
-    background: #fff5f1;
-    color: #8a3426;
+    border: 1px solid var(--afb-blue-status);
+    background: var(--afb-surface);
+    color: var(--afb-white);
 }
 
 .auth-success h1 {
@@ -159,14 +153,14 @@ button:hover {
 .text-link {
     display: inline-block;
     margin-top: 10px;
-    color: #176d64;
+    color: var(--afb-blue-status);
     font-size: 14px;
     font-weight: 700;
 }
 
-footer {
+.auth-footer {
     margin-top: 28px;
-    color: #697a7c;
+    color: var(--afb-text-dim);
     font-size: 12px;
     text-align: center;
 }

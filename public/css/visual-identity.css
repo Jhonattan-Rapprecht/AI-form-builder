@@ -1,0 +1,35 @@
+:root {
+    --afb-navy: #0b1224;
+    --afb-blue: #3b82f6;
+    --afb-blue-shadow: rgba(37, 99, 235, 0.5);
+    --afb-blue-glow: rgba(37, 99, 235, 0.18);
+    --afb-blue-status: #60a5fa;
+    --afb-blue-focus: rgba(59, 130, 246, 0.9);
+    --afb-blue-progress-glow: rgba(59, 130, 246, 0.7);
+    --afb-grid-line: rgba(59, 130, 246, 0.035);
+    --afb-white: #ffffff;
+    --afb-brand-muted: #cbd5e1;
+    --afb-text-muted: #94a3b8;
+    --afb-text-subtle: #64748b;
+    --afb-text-dim: #475569;
+    --afb-border: rgba(148, 163, 184, 0.15);
+    --afb-surface: rgba(148, 163, 184, 0.12);
+    --afb-panel-glow: rgba(37, 99, 235, 0.18);
+    --afb-font-family: Arial, Helvetica, sans-serif;
+}
+
+.afb-wordmark {
+    display: inline-flex;
+    align-items: center;
+    color: var(--afb-brand-muted);
+    font-family: var(--afb-font-family);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.afb-wordmark-ai {
+    color: var(--afb-blue);
+}

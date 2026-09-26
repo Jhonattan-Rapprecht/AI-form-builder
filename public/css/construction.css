@@ -11,9 +11,9 @@ body {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0b1224;
-    color: #ffffff;
+    font-family: var(--afb-font-family);
+    background: var(--afb-navy);
+    color: var(--afb-white);
 }
 
 .construction-page {
@@ -39,8 +39,8 @@ body {
     inset: 0;
 
     background-image:
-        linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+        linear-gradient(var(--afb-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--afb-grid-line) 1px, transparent 1px);
 
     background-size: 50px 50px;
 
@@ -67,25 +67,13 @@ body {
     align-items: center;
 }
 
-.brand {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-
-    color: #cbd5e1;
-}
-
-.brand-ai {
-    color: #3b82f6;
-}
-
 .version {
     font-size: 13px;
-    color: #64748b;
+    color: var(--afb-text-subtle);
 
     padding: 6px 12px;
 
-    border: 1px solid rgba(148, 163, 184, 0.15);
+    border: 1px solid var(--afb-border);
     border-radius: 20px;
 }
 
@@ -140,7 +128,7 @@ body {
     animation: wrench-turn 4s ease-in-out infinite;
 
     filter:
-        drop-shadow(0 0 12px rgba(37, 99, 235, 0.5));
+        drop-shadow(0 0 12px var(--afb-blue-shadow));
 }
 
 .wrench-glow {
@@ -151,7 +139,7 @@ body {
 
     border-radius: 50%;
 
-    background: rgba(37, 99, 235, 0.18);
+    background: var(--afb-blue-glow);
 
     filter: blur(35px);
 
@@ -221,7 +209,7 @@ body {
     font-weight: 700;
     letter-spacing: 1.5px;
 
-    color: #60a5fa;
+    color: var(--afb-blue-status);
 }
 
 .status-dot {
@@ -230,10 +218,10 @@ body {
 
     border-radius: 50%;
 
-    background: #3b82f6;
+    background: var(--afb-blue);
 
     box-shadow:
-        0 0 8px rgba(59, 130, 246, 0.9);
+        0 0 8px var(--afb-blue-focus);
 
     animation: status-pulse 1.5s ease-in-out infinite;
 }
@@ -275,7 +263,7 @@ h1 {
 
     line-height: 1.7;
 
-    color: #94a3b8;
+    color: var(--afb-text-muted);
 
     margin-bottom: 35px;
 }
@@ -297,7 +285,7 @@ h1 {
 
     font-size: 11px;
 
-    color: #64748b;
+    color: var(--afb-text-subtle);
 }
 
 .progress-bar {
@@ -308,7 +296,7 @@ h1 {
 
     border-radius: 10px;
 
-    background: rgba(148, 163, 184, 0.12);
+    background: var(--afb-surface);
 }
 
 .progress {
@@ -317,10 +305,10 @@ h1 {
 
     border-radius: inherit;
 
-    background: #3b82f6;
+    background: var(--afb-blue);
 
     box-shadow:
-        0 0 12px rgba(59, 130, 246, 0.7);
+        0 0 12px var(--afb-blue-progress-glow);
 
     animation: progress-move 3s ease-in-out infinite;
 }
@@ -353,7 +341,7 @@ footer {
 
     font-size: 12px;
 
-    color: #475569;
+    color: var(--afb-text-dim);
 }
 
 
